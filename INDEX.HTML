@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React en un solo archivo HTML</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Incluimos React y ReactDOM desde un CDN -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Nuestro código React dentro del script con type="text/babel" -->
+    <script type="text/babel">
+      function App() {
+        return (
+          <div>
+            <h1>¡Hola, React en un solo archivo HTML!</h1>
+            <p>Este es un ejemplo simple de React.</p>
+          </div>
+        );
+      }
+
+      // Renderizamos el componente en el div con id="root"
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+  </body>
+</html>
