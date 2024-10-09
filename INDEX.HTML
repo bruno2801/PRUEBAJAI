@@ -1,31 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React en un solo archivo HTML5</title>
-  </head>
-  <body>
-    <div id="root"></div>
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import "./App.css";
 
-    <!-- Incluimos React y ReactDOM desde un CDN -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+function App() {
+  return (
+    <Router>
+      <div className="app">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/course/:id" element={<CourseDetail />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
 
-    <!-- Nuestro código React dentro del script con type="text/babel" -->
-    <script type="text/babel">
-      function App() {
-        return (
-          <div>
-            <h1>¡Hola, React en un solo archivo HTML!</h1>
-            <p>Este es un ejemplo simple de React.</p>
-          </div>
-        );
-      }
+function Navbar() {
+  return (
+    <nav className="navbar">
+      <h2>Matemática Financiera eLearning</h2>
+      <ul>
+        <li>
+          <Link to="/">Inicio</Link>
+        </li>
+        <li>
+          <Link to="/courses">Cursos</Link>
+        </li>
+        <li>
+          <Link to="/profile">Perfil</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+}
 
-      // Renderizamos el componente en el div con id="root"
-      ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
-  </body>
-</html>
+function Home() {
+  return (
+    <div className="home">
+      <h1>Bienvenido al curso de Matemática Financiera</h1>
+      <p>
+        Aprende los conceptos fundamentales sobre matemática financiera, como el
+        valor del dinero en el tiempo, tasas de interés, anualidades y mucho
+        más.
+      </p>
+    </div>
+  );
+}
+
+function Courses() {
+  const courseList = [
+    { id: 1, title: "Valor del dinero en el tiempo" },
+    { id: 2, title: "Interés simple y compuesto" },
+    { id: 3, title: "Anualidades y Perpetuidades" },
+  ];
+
+  return (
+    <div className="courses">
+      <h2>Lista de Cursos</h2>
+      <ul>
+        {courseList.map((course) => (
+          <li key={course.id}>
+            <Link to={`/course/${course.id}`}>{course.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function CourseDetail() {
+  const { id } = useParams();
+  const courseContent = {
+    1: {
+      title: "Valor del dinero en el tiempo",
+      content:
+        "Aprenderás sobre la importancia del valor del dinero en el tiempo y cómo calcularlo.",
+    },
+    2: {
+      title: "Interés simple y compuesto",
+      content:
+        "Explora las diferencias entre el interés simple y el compuesto y cómo se calculan.",
+    },
+    3: {
+      title: "Anualidades y Perpetuidades",
+      content:
+        "Entiende cómo funcionan las anualidades y perpetuidades en la matemática financiera.",
+    },
+  };
+
+  const course = courseContent[id];
+
+  return (
+    <div className="course-detail">
+      <h2>{course?.title}</h2>
+      <p>{course?.content}</p>
+    </div>
+  );
+}
+
+function Profile() {
+  return (
+    <div className="profile">
+      <h2>Perfil del Usuario</h2>
+      <p>Aquí puedes ver y editar la información de tu perfil.</p>
+    </div>
+  );
+}
+
+export default App;
